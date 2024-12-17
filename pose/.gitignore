@@ -1,0 +1,4 @@
+# .gitignore 내용에 추가
+ControlNet-v1-1-nightly/*.trt
+ControlNet-v1-1-nightly/annotator/ckpts/*.onnx
+

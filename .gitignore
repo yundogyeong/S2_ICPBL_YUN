@@ -1,0 +1,7 @@
+*.png
+*.jepg
+*.jpg
+*.onnx
+*.trt
+*.pth
+*.pt
