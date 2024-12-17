@@ -15,7 +15,6 @@ import torchvision
 from torchvision.transforms import Normalize, Resize
 import os
 
-
 cuda.init()
 # CUDA context and buffer initialization
 host_inputs, cuda_inputs, host_outputs, cuda_outputs, bindings = [], [], [], [], []
@@ -103,7 +102,7 @@ if img.shape[2] == 4:  # If the image has an alpha channel, remove it
 
 input = torch.from_numpy(img).float().to(device)
 input = input.permute(2,0,1).unsqueeze(0).half().cpu()
-torch.cuda.synchronize()
+
 for _ in range(5):
     _, _, enhanced_img = f_infer(input, prepared_engine)
 torch.cuda.synchronize()
@@ -118,7 +117,6 @@ torch.cuda.synchronize()
 reshaped_output = np.reshape(enhanced_img, (1, 3, 338, 506))
 output_tensor = torch.from_numpy(reshaped_output).to(device="cuda", dtype=torch.float16)
 print(f"Graph Execution Time: {(start.elapsed_time(end)/1000):.6f} seconds")
-
 
 torchvision.utils.save_image(output_tensor, 'output_image.jpeg')
 cuda_context.pop()

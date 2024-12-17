@@ -55,7 +55,6 @@ static_input = input.clone().cuda()
 with torch.no_grad():
     for _ in range(3):  # Perform warm-up passes
         _, _, _ = model(static_input)
-        
 torch.cuda.synchronize()
 
 for _ in range(5):
