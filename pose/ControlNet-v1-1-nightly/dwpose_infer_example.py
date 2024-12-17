@@ -1,19 +1,35 @@
+import argparse
+import cv2
+import matplotlib.pyplot as plt
+import time
+import torch
 from annotator.dwpose import DWposeDetector
 
-if __name__ == "__main__":
+def main(input_image, output_image):
     pose = DWposeDetector()
-    import cv2
-    test_image = 'test_imgs/pose1.png'
-    oriImg = cv2.imread(test_image)  # B,G,R order
-    import matplotlib.pyplot as plt
-    import time
-    import torch
+    oriImg = cv2.imread(input_image)  # B,G,R order
+    
+    # Warm-up runs (5번 반복)
     for _ in range(5):
-        out = pose(oriImg)
+        _ = pose(oriImg)
+        
+    # 성능 측정
     torch.cuda.synchronize()
     start_time = time.time()
     out = pose(oriImg)
     torch.cuda.synchronize()
     end_time = time.time()
-    print(end_time - start_time)
-    plt.imsave('result.jpg', out)
+    
+    print(f"Inference Time: {end_time - start_time:.4f} seconds")
+    
+    # 결과 저장
+    plt.imsave(output_image, out)
+    print(f"Result saved to: {output_image}")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="DWposeDetector Inference")
+    parser.add_argument("--input", type=str, default='test_imgs/pose1.png',  help="Path to the input image")
+    parser.add_argument("--output", type=str, default='result.png', help="Path to save the output image")
+    
+    args = parser.parse_args()
+    main(args.input, args.output)

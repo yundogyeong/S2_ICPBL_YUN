@@ -73,29 +73,18 @@ def f_infer(input_data, prepared_engine):
 
 # Argument parsing
 parser = argparse.ArgumentParser()
-parser.add_argument('--file_name', type=str, default='demo_imgs/low_demo.jpg')
+parser.add_argument('--input', type=str, default='demo_imgs/low_demo.jpg')
 parser.add_argument('--normalize', type=bool, default=False)
 parser.add_argument('--task', type=str, default='exposure', help='Choose from exposure or enhance')
 config = parser.parse_args()
 
-exposure_pretrain = r'best_Epoch_exposure.pth'
-enhance_pretrain = r'best_Epoch_lol_v1.pth'
-
 # Load engine and prepare for inference
-engine = load_engine("testfp16.trt")
+engine = load_engine("enhance.trt")
 prepared_engine = prepare_trt_engine(engine)
 
-model = IAT().to(device)
-if config.task == 'exposure':
-    model.load_state_dict(torch.load(exposure_pretrain))
-elif config.task == 'enhance':
-    model.load_state_dict(torch.load(enhance_pretrain))
-else:
-    warnings.warn('Only could be exposure or enhance')
-model.eval().half()
 
 # Pre-process input image
-img = Image.open(config.file_name)
+img = Image.open(config.input)
 img = np.asarray(img) / 255.0
 if img.shape[2] == 4:  # If the image has an alpha channel, remove it
     img = img[:, :, :3]
