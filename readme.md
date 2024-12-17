@@ -2,6 +2,11 @@
 
 ## 프로젝트 설명
 공연장환경(어두운 조명, 다중 군중 등)에 대응 가능한 human pose estimation 기술
+## 환경설정
+
+TensorRT Docker 환경에서 모델을 실행 가능. 아래 링크를 참고하여 TensorRT Docker 이미지와 사용법 확인:
+
+[TensorRT Docker 환경 설정 가이드](https://docs.nvidia.com/deeplearning/tensorrt/container-release-notes/)
 
 ---
 ## 0. tensorRT 모델 준비
