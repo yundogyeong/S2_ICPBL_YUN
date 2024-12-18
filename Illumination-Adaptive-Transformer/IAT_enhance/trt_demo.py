@@ -20,7 +20,6 @@ from utils import PSNR, validation, LossNetwork
 from model.IAT_main import IAT
 from BN_model import BrightnessClassifier
 cuda.init()
-# CUDA context and buffer initialization
 host_inputs, cuda_inputs, host_outputs, cuda_outputs, bindings = [], [], [], [], []
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
@@ -144,10 +143,10 @@ start.record()
 _, _, enhanced_img = f_infer(input, prepared_engine, cuda_context)
 end.record()
 torch.cuda.synchronize()
+
 reshaped_output = np.reshape(enhanced_img, (1, 3, 338, 506))
 output_tensor = torch.from_numpy(reshaped_output).to(device="cuda", dtype=torch.float16)
 print(f"Graph Execution Time: {(start.elapsed_time(end)/1000):.6f} seconds")
-
 
 torchvision.utils.save_image(output_tensor, 'output_image.jpeg')
 cuda_context.pop()

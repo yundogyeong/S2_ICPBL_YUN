@@ -9,11 +9,9 @@ def main(input_image, output_image):
     pose = DWposeDetector()
     oriImg = cv2.imread(input_image)  # B,G,R order
     
-    # Warm-up runs (5번 반복)
     for _ in range(5):
         _ = pose(oriImg)
         
-    # 성능 측정
     torch.cuda.synchronize()
     start_time = time.time()
     out = pose(oriImg)
@@ -22,7 +20,6 @@ def main(input_image, output_image):
     
     print(f"Inference Time: {end_time - start_time:.4f} seconds")
     
-    # 결과 저장
     plt.imsave(output_image, out)
     print(f"Result saved to: {output_image}")
 
