@@ -47,8 +47,8 @@ class DWposeDetector:
         self.pose_host_inputs, self.pose_cuda_inputs, self.pose_host_outputs, self.pose_cuda_outputs, self.pose_bindings = [], [], [], [], []
 
         self.pose_estimation = Wholebody()
-        self.yolo_engine = load_engine("/workspace/DWPose/ControlNet-v1-1-nightly/yolo.trt")
-        self.pose_engine = load_engine("/workspace/DWPose/ControlNet-v1-1-nightly/pose.trt")
+        self.yolo_engine = load_engine("yolo.trt")
+        self.pose_engine = load_engine("pose.trt")
         
         self.yolo_prepared_engine = self.prepare_yolo_trt_engine(self.yolo_engine)
         self.pose_prepared_engine = self.prepare_pose_trt_engine(self.pose_engine)
