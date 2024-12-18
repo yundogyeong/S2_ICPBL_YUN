@@ -1,5 +1,5 @@
 *.png
-*.jepg
+*.jpeg
 *.jpg
 *.onnx
 *.trt
