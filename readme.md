@@ -13,8 +13,13 @@ TensorRT Docker 환경에서 모델을 실행 가능. 아래 링크를 참고하
 
 이미지 복원 모델
 ```bash
+# enhance
 trtexec --onnx="enhance.onnx" --saveEngine="enhance.trt" --fp16
 mv enhance.trt Illumination-Adaptive-Transformer/IAT_enhance/
+
+# exposure
+trtexec --onnx="exposure.onnx" --saveEngine="exposure.trt" --fp16
+mv exposure.trt Illumination-Adaptive-Transformer/IAT_enhance/
 ```
 
 포즈 추정 모델
